@@ -87,6 +87,7 @@ are used. Mathlib is the only external Lean dependency.
 
 - [Root Lean source](XZMathieuSU2Counterexamples.lean)
 - [Detailed coverage ledger](FORMALIZATION_STATUS.md)
+- [Independent formalization audit](FORMALIZATION_AUDIT.md)
 
 Remaining supporting claims include **Remark 2.3** (`rem:generating`):
 the general Laurent-trinomial inverse-square-root constant-term identity and

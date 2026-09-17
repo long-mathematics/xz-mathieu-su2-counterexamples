@@ -4,7 +4,7 @@ Canonical manuscript: `xz_mathieu_su2_counterexamples.tex` (arXiv v1).
 Initial repository commit: `b4b44eaa8e1804799c9ccc777b2b68f76d5e32c5`.
 Canonical manuscript Git blob: `049c436d66548845bf9ba7339548d079bf4c598f`.
 
-Release status: **IN PROGRESS**. Core proofs are implemented; final clean validation and supporting extensions remain.
+Release status: **CORE COMPLETE**. All five central named results and all core gates are proved. Two supporting derivations remain explicitly partial; see the independent audit.
 Lean: `v4.34.0`; mathlib: `5ed2965256430c3649e86755f9576b54eca72435`.
 The five central named results and all substantive labelled equations are inventoried below.
 PROVED means the full stated claim is kernel-checked without project axioms.
@@ -323,11 +323,11 @@ The dependency graph describes logical obligations; supporting implementation le
 - Statement: Remark 4.3: the one-way implication does not yield the two-dimensional Jacobian conjecture from the SU(2) counterexample.
 - Status: **EXPOSITORY**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
+- Lean correspondence: `not_applicable`.
 - Module: `none`.
 - Dependencies: none.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
-- Blocker: none identified.
+- Proof route / representation: Expository discussion of a one-way implication; not an input to any counterexample proof.
+- Blocker: none; no formalization obligation is claimed.
 
 ### `eq:xz-conjecture`
 
