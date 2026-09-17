@@ -4,48 +4,53 @@
 
 Let
 
-\[
-\mathcal I(h)=\int_0^1\int_{\mathbb T}h(x,z)\,\frac{dz}{2\pi iz}\,dx
+$$
+\mathcal{I}(h)=\int_0^1\int_{\mathbb{T}} h(x,z)\,\frac{dz}{2\pi i z}\,dx,
 \qquad
-\bigl(h\in\mathbb C[x,z,z^{-1}]\bigr).
-\]
+h\in\mathbb{C}[x,z,z^{-1}].
+$$
 
 We give the three-term Laurent polynomial
 
-\[
+$$
 f(x,z)=(1-z^{-1})\bigl((1-x)+xz\bigr)
-\]
+$$
 
 for which
 
-\[
-\mathcal I(f^n)=0,
+$$
+\mathcal{I}(f^n)=0,
 \qquad
-\mathcal I(z^{-1}f^n)=\frac{(-1)^{n-1}}{n+1}\neq0
-\qquad(n\geq1).
-\]
+\mathcal{I}(z^{-1}f^n)=\frac{(-1)^{n-1}}{n+1}\neq 0
+\qquad (n\ge 1).
+$$
 
-Since $\operatorname{Sp}(f)=\{-1,0,1\}$, this disproves the $xz$-conjecture already with one interval variable and one torus variable, and it also shows that $\ker\mathcal I$ is not a Mathieu--Zhao subspace. Padding gives counterexamples to every mixed case of the $xz$-conjecture. Writing the coordinate functions on $SU(2)$ as
+Since $\mathrm{Sp}(f)=\{-1,0,1\}$, this disproves the $xz$-conjecture already with one interval variable and one torus variable, and it also shows that $\ker \mathcal{I}$ is not a Mathieu--Zhao subspace. Padding gives counterexamples to every mixed case of the $xz$-conjecture. Writing the coordinate functions on $SU(2)$ as
 
-\[
-g=\begin{pmatrix}a&c\\ b&d\end{pmatrix},
-\]
+$$
+g=\begin{pmatrix}
+a & c \\
+b & d
+\end{pmatrix},
+$$
 
 the same example lifts, through the integration formula of Müger and Tuset, to the regular functions
 
-\[
-F=(1+c)(ad+b),\qquad G=-c,
-\]
+$$
+F=(1+c)(ad+b),
+\qquad
+G=-c,
+$$
 
 which satisfy
 
-\[
-\int_{SU(2)}F^n\,dg=0,
+$$
+\int_{SU(2)} F^n\,dg=0,
 \qquad
-\int_{SU(2)}F^nG\,dg=\frac{(-1)^{n-1}}{n+1}\neq0
-\]
+\int_{SU(2)} F^nG\,dg=\frac{(-1)^{n-1}}{n+1}\neq 0
+$$
 
-for every $n\geq1$. Thus the Mathieu conjecture for $SU(2)$ is false.
+for every $n\ge 1$. Thus the Mathieu conjecture for $SU(2)$ is false.
 
 ## Preprint and source
 
