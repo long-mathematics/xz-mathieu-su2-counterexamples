@@ -1,0 +1,5 @@
+beta-binomial identities: verified for 1 <= n <= 50
+basic pure/mixed moments: verified for 1 <= n <= 50
+three-parameter circuit family: verified on exact rational samples through n = 50
+SU(2) monomial integration formula: verified for 0 <= r,s,t,u <= 8
+all exact checks passed
