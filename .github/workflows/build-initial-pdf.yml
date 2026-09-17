@@ -1,0 +1,36 @@
+name: Build initial paper PDF
+
+on:
+  push:
+    branches:
+      - setup-repository
+    paths:
+      - xz_mathieu_su2_counterexamples.tex
+      - .github/workflows/build-initial-pdf.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended lmodern
+      - name: Compile paper
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error xz_mathieu_su2_counterexamples.tex
+          pdflatex -interaction=nonstopmode -halt-on-error xz_mathieu_su2_counterexamples.tex
+      - name: Commit compiled PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add xz_mathieu_su2_counterexamples.pdf
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Compile paper PDF"
+          git push
