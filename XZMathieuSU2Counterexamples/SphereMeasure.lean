@@ -6,7 +6,7 @@ import Mathlib.Topology.Algebra.Polynomial
 import Mathlib.MeasureTheory.Measure.Support
 
 /-! The Euclidean sphere model, normalized surface measure, and integrability
-and positivity facts required by the Hopf and radial-transfer theorems. -/
+used for the SU(2) moment recurrence. -/
 
 noncomputable section
 open MeasureTheory Metric

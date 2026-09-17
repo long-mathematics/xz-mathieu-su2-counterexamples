@@ -2,7 +2,7 @@ import Mathlib.Algebra.Algebra.Subalgebra.Basic
 import Mathlib.Order.Filter.AtTopBot.Basic
 import Mathlib.Tactic
 
-/-! Definition 2.1 and elementary witness logic. -/
+/-! Mathieu–Zhao subspaces and elementary witness logic. -/
 
 namespace XZMathieuSU2Counterexamples
 

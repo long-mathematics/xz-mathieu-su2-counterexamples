@@ -2,6 +2,9 @@ name = "xz_mathieu_su2_counterexamples"
 version = "0.1.0"
 defaultTargets = ["XZMathieuSU2Counterexamples"]
 
+[leanOptions]
+autoImplicit = false
+
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4.git"

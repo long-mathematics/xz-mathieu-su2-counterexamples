@@ -7,6 +7,7 @@ Only the standard library is required. Dependencies under .lake are excluded.
 
 from pathlib import Path
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT = "XZMathieuSU2Counterexamples"
@@ -96,6 +97,8 @@ def check_ledger() -> None:
     entries = dict(zip(parts[1::2], parts[2::2]))
     if len(entries) != len(parts[1::2]):
         raise ValueError("Duplicate ledger identifiers")
+    source = "\n".join(lean_code(p.read_text()) for p in (ROOT / PROJECT).rglob("*.lean"))
+    declarations = set(re.findall(r"\b(?:theorem|lemma|def|abbrev|structure)\s+([\w.₀-₉]+)", source))
     graph = {}
     for name, body in entries.items():
         status = re.search(r"^- Status: \*\*([^*]+)\*\*", body, re.M)
@@ -103,6 +106,13 @@ def check_ledger() -> None:
         dependencies = re.search(r"^- Dependencies: (.*)$", body, re.M)
         if not status or status[1] not in {"PROVED", "PARTIAL", "TODO", "BLOCKED", "EXPOSITORY"} or not correspondence or not dependencies:
             raise ValueError(f"Incomplete ledger entry: {name}")
+        for field in ("Statement", "Module", "Proof route / representation", "Blocker"):
+            if not re.search(r"^- " + re.escape(field) + r": .+", body, re.M):
+                raise ValueError(f"Missing {field} in {name}")
+        if status[1] == "PROVED":
+            for declaration in correspondence[1].split(", "):
+                if declaration == "pending" or declaration.split(".")[-1] not in declarations:
+                    raise ValueError(f"Proved entry {name} has no owned declaration: {declaration}")
         graph[name] = re.findall(r"`([^`]+)`", dependencies[1])
     done, active = set(), set()
 
@@ -122,6 +132,22 @@ def check_ledger() -> None:
     for name in graph:
         visit(name)
     tex = (ROOT / "xz_mathieu_su2_counterexamples.tex").read_text()
+    canonical = re.search(r"Canonical manuscript Git blob: `([0-9a-f]{40})`", ledger)
+    actual = subprocess.check_output(["git", "hash-object", "xz_mathieu_su2_counterexamples.tex"],
+                                     cwd=ROOT, text=True).strip()
+    if not canonical or actual != canonical[1]:
+        raise ValueError("Canonical manuscript blob differs from the recorded source")
+    all_labels = set(re.findall(r"\\label\{([^}]+)\}", tex))
+    if all_labels - entries.keys():
+        raise ValueError(f"Manuscript labels missing from ledger: {sorted(all_labels - entries.keys())}")
+    required_core = {"def:mathieu", "eq:I-def", "eq:beta-binomial-intro", "eq:bernstein-average",
+                     "eq:basic-f", "basic-spectrum", "eq:basic-moments", "thm:basic-xz",
+                     "eq:family", "family-spectrum", "eq:family-pure", "eq:family-mixed",
+                     "prop:family", "su2-coordinates", "eq:FG-family", "eq:su2-pure",
+                     "eq:su2-mixed", "thm:su2", "small-pair"}
+    if not required_core <= entries.keys() or any(
+            "- Core release gate: yes." not in entries[k] for k in required_core):
+        raise ValueError("Core release inventory cannot omit or downgrade mandatory obligations")
     # All current named environments are labelled; reject an unlabelled addition.
     results = re.findall(
         r"\\begin\{(theorem|lemma|corollary|proposition)\}(.*?)\\end\{\1\}",

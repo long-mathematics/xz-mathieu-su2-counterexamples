@@ -71,4 +71,57 @@ theorem su2_determinant_relation (g : SU2) :
   have h := (Matrix.mem_specialUnitaryGroup_iff.mp g.property).2
   simpa [Matrix.det_fin_two, mul_comm] using h
 
+theorem entryMonomial_right_phase (r s t u : ℕ) (θ : ℝ) (g : SU2) :
+    entryMonomial r s t u (g * diagonalPhase θ) =
+      Complex.exp (((r : ℂ)+s-t-u)*Complex.I*θ) * entryMonomial r s t u g := by
+  have hc : star (Complex.exp (Complex.I * θ)) = Complex.exp (-Complex.I * θ) := by
+    rw [Complex.star_def, ← Complex.exp_conj]
+    congr 1
+    simp
+  have hpow : Complex.exp (Complex.I * θ)^(r+s) *
+      star (Complex.exp (Complex.I * θ))^(t+u) =
+      Complex.exp (((r : ℂ)+s-t-u)*Complex.I*θ) := by
+    rw [hc, ← Complex.exp_nat_mul, ← Complex.exp_nat_mul, ← Complex.exp_add]
+    congr 1
+    push_cast
+    ring
+  rw [← hpow]
+  simp only [entryMonomial, diagonalPhase, sphereToSU2, sphereMatrix,
+    Submonoid.coe_mul, Matrix.mul_apply, Fin.sum_univ_two]
+  simp [Matrix.of_apply, mul_pow, pow_add]
+  ring
+
+theorem entryMonomial_integral_right_zero (r s t u : ℕ) (h : r+s ≠ t+u) :
+    (∫ g : SU2, entryMonomial r s t u g ∂normalizedHaar SU2) = 0 := by
+  let n : ℝ := (r : ℝ)+s-t-u
+  have hn : n ≠ 0 := by
+    dsimp [n]
+    intro hn
+    have he : (r : ℝ)+s = t+u := by linarith
+    exact h (by exact_mod_cast he)
+  have hfreq : ((r : ℂ)+s-t-u)*Complex.I*((Real.pi/n : ℝ) : ℂ) = Real.pi*Complex.I := by
+    have hnc : (n : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hn
+    have hc : (n : ℂ) = (r : ℂ)+s-t-u := by simp [n]
+    rw [← hc, Complex.ofReal_div]
+    field_simp
+  have he := integral_mul_right_eq_self (μ := normalizedHaar SU2)
+    (entryMonomial r s t u) (diagonalPhase (Real.pi/n))
+  simp_rw [entryMonomial_right_phase, hfreq, Complex.exp_pi_mul_I] at he
+  rw [integral_const_mul] at he
+  linear_combination -he/2
+
+/-- The full monomial identity (4.3), with both Kronecker deltas. -/
+theorem su2_monomial (r s t u : ℕ) :
+    (∫ g : SU2, entryMonomial r s t u g ∂normalizedHaar SU2) =
+      if r = u ∧ s = t then
+        (-1 : ℂ)^s * ((r.factorial : ℂ)*s.factorial/(r+s+1).factorial) else 0 := by
+  by_cases h : r = u ∧ s = t
+  · rcases h with ⟨rfl,rfl⟩
+    rw [ite_eq_left ⟨rfl,rfl⟩]
+    exact entryMonomial_integral_diagonal _ _
+  · rw [ite_eq_right h]
+    by_cases hl : r+t = u+s
+    · exact entryMonomial_integral_right_zero r s t u (by omega)
+    · exact entryMonomial_integral_left_zero r s t u hl
+
 end XZMathieuSU2Counterexamples.Hopf

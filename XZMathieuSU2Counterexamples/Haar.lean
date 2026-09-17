@@ -5,7 +5,7 @@ import Mathlib.MeasureTheory.Function.LocallyIntegrable
 import XZMathieuSU2Counterexamples.Basic
 import XZMathieuSU2Counterexamples.RepresentativeFunctions
 
-/-! Normalized Haar measure and the integral identity in Lemma 2.3.
+/-! Normalized Haar measure and integration on representative functions.
 The representative-function correspondence is developed separately.
 -/
 

@@ -7,3 +7,7 @@ import XZMathieuSU2Counterexamples.SU2Basic
 import XZMathieuSU2Counterexamples.SU2Integration
 import XZMathieuSU2Counterexamples.CircleIntegral
 import XZMathieuSU2Counterexamples.SU2Counterexample
+import XZMathieuSU2Counterexamples.FullIntegration
+import XZMathieuSU2Counterexamples.Padding
+import XZMathieuSU2Counterexamples.ProductIntegral
+import XZMathieuSU2Counterexamples.GeneratingFunction

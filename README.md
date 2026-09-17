@@ -71,3 +71,43 @@ python3 scripts/verify_xz_mathieu_counterexamples.py
 ```
 
 The script is an independent computational check of the displayed algebraic identities over the stated finite ranges; the proofs in the manuscript are symbolic and valid for all positive exponents.
+
+## Lean formalization
+
+The core counterexample theorems are fully formalized in Lean.
+All five central named results are covered: Theorem 2.1, Corollary 2.2 for every
+$k,l\geq1$, Proposition 3.1 with its full three-parameter family, the full
+arbitrary-polynomial integration formula in Lemma 4.1, and Theorem 4.2 on
+actual $SU(2)$ with normalized Haar measure and the representative-function
+algebra. The explicit $\lambda=\mu=1$ pair is included.
+
+The formalization uses Lean **4.34.0** and mathlib commit
+`5ed2965256430c3649e86755f9576b54eca72435`. No project axioms or proof placeholders
+are used. Mathlib is the only external Lean dependency.
+
+- [Root Lean source](XZMathieuSU2Counterexamples.lean)
+- [Detailed coverage ledger](FORMALIZATION_STATUS.md)
+
+Remaining supporting claims include **Remark 2.3** (`rem:generating`):
+the general Laurent-trinomial inverse-square-root constant-term identity and
+its analytic square-root integral derivation. The constant formal moment
+series and the radicand simplification are proved. This release therefore
+claims core completion, not full-paper coverage.
+
+The separate joint polar-coordinate measure description in the proof of
+Lemma 4.1 (`su2-polar-description`) is also not formalized. The full integration
+formula itself is proved using phase invariance and a sphere-moment recurrence.
+
+Build and audit with:
+
+```sh
+python3 scripts/fetch_mathlib_cache.py
+python3 scripts/audit_source.py
+lake build
+lake env lean scripts/audit_lean.lean
+python3 scripts/verify_xz_mathieu_counterexamples.py
+```
+
+For a clean rebuild of project proofs, run `lake clean xz_mathieu_su2_counterexamples`
+before `lake build`. Dependency caches are not proof substitutes; all project
+proofs are compiled by Lean and their transitive axioms are audited.

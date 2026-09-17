@@ -28,7 +28,9 @@ jobs:
           persist-credentials: false
 
       - name: Audit owned sources and manuscript ledger
-        run: python3 scripts/audit_source.py
+        run: |
+          python3 scripts/audit_source.py
+          python3 scripts/test_audit_source.py
 
       - name: Install the pinned Lean toolchain
         uses: leanprover/lean-action@50fcf42d2e460296f1a34b402e990d1b24f8b596 # v1

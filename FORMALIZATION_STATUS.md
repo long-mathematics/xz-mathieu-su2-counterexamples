@@ -90,12 +90,12 @@ The dependency graph describes logical obligations; supporting implementation le
 ### `alternating-sums`
 
 - Statement: The full positive binomial row sums to zero; the row omitting its last term sums to (-1)^(n-1).
-- Status: **TODO**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
-- Module: `Bernstein`.
+- Lean correspondence: `alternating_row, alternating_partial_row`.
+- Module: `GeneratingFunction`.
 - Dependencies: none.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
+- Proof route / representation: Exact integer alternating-binomial identities from mathlib, transported to ℂ.
 - Blocker: none identified.
 
 ### `eq:basic-moments`
@@ -123,24 +123,24 @@ The dependency graph describes logical obligations; supporting implementation le
 ### `cor:all-mixed-xz`
 
 - Statement: Corollary 2.2: all k,l ≥ 1 fail the xz conjecture and the product-integration kernel Mathieu–Zhao property.
-- Status: **TODO**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
-- Module: `Padding`.
+- Lean correspondence: `all_mixed_xz, pad_integral, pad_eval, multiIntegral_eq_product`.
+- Module: `Padding; ProductIntegral`.
 - Dependencies: `thm:basic-xz`.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
+- Proof route / representation: Finite products use AddMonoidAlgebra over MvPolynomial (Fin l) ℂ with exponent lattice Fin k → ℤ. Coordinate padding is a ring homomorphism; exact integral reduction follows from probability-product marginals. The full cube/torus Haar equivalence is proved for every polynomial.
 - Blocker: none identified.
 
 ### `rem:generating`
 
 - Statement: Remark 2.3: trinomial constant-term resolvent equals inverse square root; radicand simplifies to (1-t)^2+4tx; integrated series is one.
-- Status: **TODO**.
+- Status: **PARTIAL**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
+- Lean correspondence: `momentSeries_eq_one, generating_radicand`.
 - Module: `GeneratingFunction`.
 - Dependencies: `eq:basic-moments`.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
-- Blocker: none identified.
+- Proof route / representation: The formal moment series equals one coefficientwise, and the radicand simplification is proved. The general trinomial constant-term inverse-square-root identity and its analytic square-root integral derivation are not formalized. A search of the pinned power-series library found no ready formal square-root/binomial-series theorem; those optional derivations would require separate formal-series or analytic branch infrastructure. They are not used by any counterexample theorem.
+- Blocker: optional inverse-square-root formal-series and analytic-branch infrastructure remains outside this release.
 
 ### `eq:family`
 
@@ -211,45 +211,45 @@ The dependency graph describes logical obligations; supporting implementation le
 ### `eq:beta-map`
 
 - Statement: β(z₁,z₂,x)=((1-x)z₂,xz₁,-z₁⁻¹,z₂⁻¹); its polynomial evaluation is defined.
-- Status: **TODO**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
-- Module: `SU2Integration`.
+- Lean correspondence: `Hopf.betaPoint, Hopf.betaEval`.
+- Module: `FullIntegration`.
 - Dependencies: `su2-coordinates`.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
+- Proof route / representation: The literal four-coordinate substitution is evaluated on two actual Circle variables and the real interval variable.
 - Blocker: none identified.
 
 ### `eq:su2-monomial`
 
 - Statement: Normalized Haar integral of a^r b^s c^t d^u is (-1)^s δ(r,u)δ(s,t) r!s!/(r+s+1)!.
-- Status: **PARTIAL**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `Hopf.su2_polynomial_transfer, Hopf.balanced_entry_integral`.
-- Module: `SU2Integration`.
+- Lean correspondence: `Hopf.su2_monomial`.
+- Module: `SU2Basic`.
 - Dependencies: `su2-coordinates`, `eq:beta-binomial-intro`.
-- Proof route / representation: Proved for every polynomial in ad,b,c and for monomials with r=u. The full arbitrary-polynomial statement is still pending; it is not assumed in Theorem 4.2.
+- Proof route / representation: Left and right phase invariance force both delta conditions. The diagonal value follows from the kernel-checked sphere rotation recurrence and factorial moments.
 - Blocker: none identified.
 
 ### `eq:su2-integration`
 
 - Statement: For every P ∈ ℂ[a,b,c,d], actual normalized Haar integral equals interval and two-circle normalized Haar integral of P∘β.
-- Status: **PARTIAL**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `Hopf.su2_polynomial_transfer, Hopf.balanced_entry_integral`.
-- Module: `SU2Integration`.
+- Lean correspondence: `Hopf.su2_integration_formula`.
+- Module: `FullIntegration`.
 - Dependencies: `eq:su2-monomial`, `eq:beta-map`, `eq:I-def`.
-- Proof route / representation: Proved for every polynomial in ad,b,c and for monomials with r=u. The full arbitrary-polynomial statement is still pending; it is not assumed in Theorem 4.2.
+- Proof route / representation: Both sides are actual integrals. Full four-variable polynomial induction extends the monomial equality, with compact-domain integrability and continuity of parameter integrals.
 - Blocker: none identified.
 
 ### `lem:su2-integration`
 
 - Statement: Lemma 4.1: full arbitrary-polynomial integration formula, by monomial identities and linearity.
-- Status: **PARTIAL**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `Hopf.su2_polynomial_transfer, Hopf.balanced_entry_integral`.
-- Module: `SU2Integration`.
+- Lean correspondence: `Hopf.su2_integration, Hopf.su2_integration_formula`.
+- Module: `FullIntegration`.
 - Dependencies: `eq:su2-integration`.
-- Proof route / representation: Proved for every polynomial in ad,b,c and for monomials with r=u. The full arbitrary-polynomial statement is still pending; it is not assumed in Theorem 4.2.
+- Proof route / representation: Full arbitrary-polynomial statement, with literal actual SU(2) entries and two normalized circle Haar integrals.
 - Blocker: none identified.
 
 ### `eq:FG-family`
@@ -310,12 +310,12 @@ The dependency graph describes logical obligations; supporting implementation le
 ### `section5:cancellation`
 
 - Statement: Bernstein equal weights, geometric sum, full-row cancellation, and persistent marked moments.
-- Status: **TODO**.
+- Status: **PROVED**.
 - Core release gate: no.
-- Lean correspondence: `pending`.
-- Module: `Bernstein`.
+- Lean correspondence: `cancellation_mechanism, bernstein_average, xzA_geometric_sum`.
+- Module: `GeneratingFunction; Bernstein`.
 - Dependencies: `eq:bernstein-average`, `alternating-sums`, `eq:basic-moments`.
-- Proof route / representation: To be implemented faithfully; Laurent coefficient polynomials and actual Haar measures.
+- Proof route / representation: Equal Bernstein weights, geometric telescoping, full/partial binomial sums, pure cancellation, and marked nonvanishing.
 - Blocker: none identified.
 
 ### `rem:one-way-jacobian`
@@ -340,3 +340,24 @@ The dependency graph describes logical obligations; supporting implementation le
 - Proof route / representation: Literal interval/constant-term functional with proved circle Haar equivalence.
 - Blocker: none identified.
 
+### `su2-polar-description`
+
+- Statement: The square-root polar parametrization in the proof of Lemma 4.1 pushes uniform interval measure and two independent circle Haar measures to normalized SU(2) Haar measure.
+- Status: **PARTIAL**.
+- Core release gate: no.
+- Lean correspondence: `Hopf.su2_firstColumn_integral, Hopf.su2_monomial`.
+- Module: `SU2Basic`.
+- Dependencies: `su2-coordinates`.
+- Proof route / representation: The actual first-column pushforward to normalized Euclidean sphere measure and all polynomial monomial moments are proved. The separate joint polar-coordinate pushforward law is not asserted. Lemma 4.1 is fully proved by phase invariance and the sphere rotation recurrence instead.
+- Blocker: A separate polar-coordinate measure-identification theorem is unnecessary for the proved integration formula and remains a supporting extension.
+
+### `context:external-results`
+
+- Statement: Introductory cited results on compact abelian groups, unmixed xz cases, earlier reductions, the Jacobian conjecture, and the Gaussian-moment motivation are contextual background, not inputs to these counterexample proofs.
+- Status: **EXPOSITORY**.
+- Core release gate: no.
+- Lean correspondence: `not_applicable`.
+- Module: `none`.
+- Dependencies: none.
+- Proof route / representation: No cited background theorem or historical assertion is introduced as an axiom or premise of a project theorem.
+- Blocker: none; outside the proof-bearing claims of this paper.

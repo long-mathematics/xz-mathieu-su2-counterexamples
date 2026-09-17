@@ -1,7 +1,7 @@
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Tactic
 
-/-! The universal phase-balanced polynomial pair in Section 3. -/
+/-! The quadratic unit sphere in two complex coordinates. -/
 
 namespace XZMathieuSU2Counterexamples.Hopf
 

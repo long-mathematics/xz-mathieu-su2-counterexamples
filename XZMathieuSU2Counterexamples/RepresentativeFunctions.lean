@@ -304,7 +304,7 @@ theorem representative_eq_span_coefficients : representativeSubmodule G =
     rw [heq]
     exact representation_coefficient_mem ρ hρ l v
 
-/-- Lemma `lem:representative-algebra` (algebra assertion): the finite span in the
+/-- The finite span in the
 usual coefficient definition is exactly the constructed unital star algebra.
 The tensor, conjugate, and pullback assertions are `coefficient_mul`,
 `coefficient_conj`, and `representative_comp`. -/
