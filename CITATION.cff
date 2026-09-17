@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the preprint."
+title: "Counterexamples to the xz-Conjecture and the Mathieu Conjecture for SU(2)"
+type: article
+authors:
+  - family-names: "Long"
+    given-names: "Christopher D."
+repository-code: "https://github.com/long-mathematics/xz-mathieu-su2-counterexamples"
+url: "https://arxiv.org/abs/2607.19012"
+identifiers:
+  - type: other
+    value: "arXiv:2607.19012"
+    description: "arXiv identifier"
