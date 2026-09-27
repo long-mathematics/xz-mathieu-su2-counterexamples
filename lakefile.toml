@@ -1,6 +1,6 @@
 name = "xz_mathieu_su2_counterexamples"
 version = "0.1.0"
-defaultTargets = ["XZMathieuSU2Counterexamples"]
+defaultTargets = ["XZMathieuSU2Counterexamples", "Pictures"]
 
 [leanOptions]
 autoImplicit = false
@@ -12,3 +12,7 @@ rev = "5ed2965256430c3649e86755f9576b54eca72435"
 
 [[lean_lib]]
 name = "XZMathieuSU2Counterexamples"
+
+# Editorial: an infoview picture of the cancellation mechanism. Not part of the release audit.
+[[lean_lib]]
+name = "Pictures"

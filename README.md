@@ -112,3 +112,18 @@ python3 scripts/verify_xz_mathieu_counterexamples.py
 For a clean rebuild of project proofs, run `lake clean xz_mathieu_su2_counterexamples`
 before `lake build`. Dependency caches are not proof substitutes; all project
 proofs are compiled by Lean and their transitive axioms are audited.
+
+## Seeing the cancellation
+
+`Pictures/Cancellation.lean` draws the cancellation mechanism of Section 5 in the Lean infoview. Open it in
+VS Code (with the Lean 4 extension) or in Lean Studio, put the cursor on the `#widget` line at the bottom,
+and open the infoview. A slider picks the exponent n; the grid's rows are the terms of (1 - z^{-1})^n and its
+columns the equal Bernstein weights 1/(n+1). The constant term of F^n is the main diagonal, the full
+alternating row, so it is 0. Multiplying by G = -c, which becomes z^{-1}, shifts the diagonal one step, and
+what remains is (-1)^{n-1}/(n+1) at every n.
+
+The drawn numbers are tied to the proofs: `Pictures.pure_moment_eq_diagonal` and
+`Pictures.marked_moment_eq_diagonal` prove, for every n >= 1, that the project's integrals equal the drawn
+diagonal sums over n+1. The `Pictures` library is editorial. It adds no manuscript obligation and sits
+outside the release audit, although `lake build` builds it and it uses no axioms beyond the standard three.
+It was written with the assistance of Claude (Anthropic).
